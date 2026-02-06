@@ -2173,10 +2173,8 @@ version = "0.1.5"
 dependencies = [
  "agent-client-protocol",
  "async-trait",
- "axum",
  "base64",
  "bon",
- "bytes",
  "chrono",
  "codex-app-server-protocol",
  "codex-core",
@@ -2184,11 +2182,9 @@ dependencies = [
  "command-group",
  "convert_case 0.6.0",
  "derivative",
- "directories",
  "dirs 5.0.1",
  "enum_dispatch",
  "eventsource-stream",
- "fork_stream",
  "futures",
  "futures-io",
  "git",
@@ -2200,7 +2196,6 @@ dependencies = [
  "rand 0.8.5",
  "regex",
  "reqwest",
- "rustls",
  "schemars 1.2.0",
  "serde",
  "serde_json",
@@ -2394,16 +2389,6 @@ name = "foreign-types-shared"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "00b0228411908ca8685dba7fc2cdd70ec9990a6e753e89b6ac91a84c40fbaf4b"
-
-[[package]]
-name = "fork_stream"
-version = "0.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fc54cf296aa5a82dfffcc911fc7a37b0dcba605725bbb4db486f7b24d7667f9d"
-dependencies = [
- "futures",
- "pin-project",
-]
 
 [[package]]
 name = "form_urlencoded"
@@ -3649,7 +3634,6 @@ version = "0.1.5"
 dependencies = [
  "anyhow",
  "async-trait",
- "bytes",
  "command-group",
  "db",
  "deployment",
@@ -3657,11 +3641,7 @@ dependencies = [
  "futures",
  "git",
  "globwalk",
- "json-patch",
- "nix 0.29.0",
  "portable-pty 0.8.1",
- "reqwest",
- "sentry",
  "serde_json",
  "services",
  "sqlx",
@@ -5353,7 +5333,6 @@ name = "review"
 version = "0.1.5"
 dependencies = [
  "anyhow",
- "chrono",
  "clap",
  "dialoguer",
  "dirs 5.0.1",
@@ -5810,15 +5789,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "secrecy"
-version = "0.10.3"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e891af845473308773346dc847b2c23ee78fe442e0472ac50e22a18a93d3ae5a"
-dependencies = [
- "zeroize",
-]
-
-[[package]]
 name = "secret-service"
 version = "4.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -6199,10 +6169,8 @@ dependencies = [
  "futures-util",
  "git",
  "git2",
- "ignore",
  "local-deployment",
  "mime_guess",
- "nix 0.29.0",
  "os_info",
  "rand 0.8.5",
  "regex",
@@ -6211,7 +6179,6 @@ dependencies = [
  "rust-embed",
  "rustls",
  "schemars 1.2.0",
- "secrecy",
  "sentry",
  "serde",
  "serde_json",
@@ -6220,7 +6187,6 @@ dependencies = [
  "shlex",
  "sqlx",
  "strip-ansi-escapes",
- "strum",
  "thiserror 2.0.18",
  "tokio",
  "tokio-util",
@@ -6239,9 +6205,7 @@ version = "0.1.5"
 dependencies = [
  "anyhow",
  "async-trait",
- "axum",
  "backon",
- "base64",
  "chrono",
  "dashmap",
  "db",
@@ -6251,7 +6215,6 @@ dependencies = [
  "executors",
  "fst",
  "futures",
- "futures-util",
  "git",
  "git2",
  "ignore",
@@ -6262,10 +6225,8 @@ dependencies = [
  "notify-rust",
  "once_cell",
  "os_info",
- "regex",
  "reqwest",
  "rust-embed",
- "secrecy",
  "serde",
  "serde_json",
  "sha2",
@@ -7846,14 +7807,12 @@ dependencies = [
  "directories",
  "dirs 5.0.1",
  "futures",
- "futures-util",
  "git2",
  "json-patch",
  "jsonwebtoken",
  "nix 0.29.0",
  "open",
  "regex",
- "reqwest",
  "rust-embed",
  "sentry",
  "sentry-tracing",
@@ -7870,7 +7829,6 @@ dependencies = [
  "tracing",
  "tracing-subscriber",
  "ts-rs 11.0.1",
- "url",
  "uuid",
  "which",
  "windows-sys 0.61.2",
