@@ -1,5 +1,4 @@
 import { useMemo, useCallback, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useDropzone } from 'react-dropzone';
 import { useCreateMode } from '@/contexts/CreateModeContext';
@@ -14,10 +13,10 @@ import {
 import { splitMessageToTitleDescription } from '@/utils/string';
 import type { ExecutorProfileId, BaseCodingAgent } from 'shared/types';
 import { CreateChatBox } from '../primitives/CreateChatBox';
+import { SettingsDialog } from '../dialogs/SettingsDialog';
 
 export function CreateChatBoxContainer() {
   const { t } = useTranslation('common');
-  const navigate = useNavigate();
   const { profiles, config, updateAndSaveConfig } = useUserSystem();
   const {
     repos,
@@ -123,7 +122,7 @@ export function CreateChatBoxContainer() {
   };
 
   const handleCustomise = () => {
-    navigate('/settings/agents');
+    void SettingsDialog.show({ initialSection: 'agents' });
   };
 
   // Determine if we can submit

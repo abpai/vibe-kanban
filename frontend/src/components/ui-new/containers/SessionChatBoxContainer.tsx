@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { useDropzone } from 'react-dropzone';
 import {
@@ -38,6 +37,7 @@ import {
   RIGHT_MAIN_PANEL_MODES,
 } from '@/stores/useUiPreferencesStore';
 import { Actions, type ActionDefinition } from '../actions';
+import { SettingsDialog } from '../dialogs/SettingsDialog';
 import {
   isActionVisible,
   useActionVisibilityContext,
@@ -142,7 +142,6 @@ export function SessionChatBoxContainer(props: SessionChatBoxContainerProps) {
 
   const sessionId = session?.id;
   const queryClient = useQueryClient();
-  const navigate = useNavigate();
   const [sessionOverrides, setSessionOverrides] =
     useState<ExecutorSessionOverrides | null>(null);
 
@@ -354,9 +353,8 @@ export function SessionChatBoxContainer(props: SessionChatBoxContainerProps) {
   const selectedPreset =
     selectedVariant ?? (variantOptions.includes('DEFAULT') ? 'DEFAULT' : null);
 
-  // Navigate to agent settings to customise variants
   const handleCustomise = () => {
-    navigate('/settings/agents');
+    void SettingsDialog.show({ initialSection: 'agents' });
   };
 
   // Queue interaction
