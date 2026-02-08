@@ -168,12 +168,22 @@ Set this in Dokploy:
 VK_ALLOWED_ORIGINS=https://hetzner.tail95b3b5.ts.net
 ```
 
+#### Required bind mounts
+
+Add these mounts in Dokploy (`Bind Mount` type):
+
+- Host path: `/home/andypai/.vk-data` -> Mount path: `/repos`
+- Host path: `/home/andypai/Projects` -> Mount path: `/home/andypai/Projects`
+
+The first mount persists Vibe Kanban data across redeploys/restarts.
+The second mount makes host projects visible from inside the container so they can be detected/imported.
+
 #### Tailnet-only exposure
 
 Expose Vibe Kanban only inside your tailnet with Tailscale Serve:
 
 ```bash
-tailscale serve --bg --https=4443 / http://127.0.0.1:3456
+tailscale serve --bg --https=4443 --set-path / http://127.0.0.1:3456
 ```
 
 This gives you a tailnet-only URL such as:
