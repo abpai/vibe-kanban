@@ -63,12 +63,14 @@ We would prefer that ideas and changes are first raised with the core team via [
 - [pnpm](https://pnpm.io/) (>=8)
 
 Additional development tools:
+
 ```bash
 cargo install cargo-watch
 cargo install sqlx-cli
 ```
 
 Install dependencies:
+
 ```bash
 pnpm i
 ```
@@ -95,23 +97,22 @@ pnpm build
 1. Run `./local-build.sh`
 2. Test with `cd npx-cli && node bin/cli.js`
 
-
 ### Environment Variables
 
 The following environment variables can be configured at build time or runtime:
 
-| Variable | Type | Default | Description |
-|----------|------|---------|-------------|
-| `POSTHOG_API_KEY` | Build-time | Empty | PostHog analytics API key (disables analytics if empty) |
-| `POSTHOG_API_ENDPOINT` | Build-time | Empty | PostHog analytics endpoint (disables analytics if empty) |
-| `PORT` | Runtime | Auto-assign | **Production**: Server port. **Dev**: Frontend port (backend uses PORT+1) |
-| `BACKEND_PORT` | Runtime | `0` (auto-assign) | Backend server port (dev mode only, overrides PORT+1) |
-| `FRONTEND_PORT` | Runtime | `3000` | Frontend dev server port (dev mode only, overrides PORT) |
-| `HOST` | Runtime | `127.0.0.1` | Backend server host |
-| `MCP_HOST` | Runtime | Value of `HOST` | MCP server connection host (use `127.0.0.1` when `HOST=0.0.0.0` on Windows) |
-| `MCP_PORT` | Runtime | Value of `BACKEND_PORT` | MCP server connection port |
-| `DISABLE_WORKTREE_CLEANUP` | Runtime | Not set | Disable all git worktree cleanup including orphan and expired workspace cleanup (for debugging) |
-| `VK_ALLOWED_ORIGINS` | Runtime | Not set | Comma-separated list of origins that are allowed to make backend API requests (e.g., `https://my-vibekanban-frontend.com`) |
+| Variable                   | Type       | Default                 | Description                                                                                                                |
+| -------------------------- | ---------- | ----------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `POSTHOG_API_KEY`          | Build-time | Empty                   | PostHog analytics API key (disables analytics if empty)                                                                    |
+| `POSTHOG_API_ENDPOINT`     | Build-time | Empty                   | PostHog analytics endpoint (disables analytics if empty)                                                                   |
+| `PORT`                     | Runtime    | Auto-assign             | **Production**: Server port. **Dev**: Frontend port (backend uses PORT+1)                                                  |
+| `BACKEND_PORT`             | Runtime    | `0` (auto-assign)       | Backend server port (dev mode only, overrides PORT+1)                                                                      |
+| `FRONTEND_PORT`            | Runtime    | `3000`                  | Frontend dev server port (dev mode only, overrides PORT)                                                                   |
+| `HOST`                     | Runtime    | `127.0.0.1`             | Backend server host                                                                                                        |
+| `MCP_HOST`                 | Runtime    | Value of `HOST`         | MCP server connection host (use `127.0.0.1` when `HOST=0.0.0.0` on Windows)                                                |
+| `MCP_PORT`                 | Runtime    | Value of `BACKEND_PORT` | MCP server connection port                                                                                                 |
+| `DISABLE_WORKTREE_CLEANUP` | Runtime    | Not set                 | Disable all git worktree cleanup including orphan and expired workspace cleanup (for debugging)                            |
+| `VK_ALLOWED_ORIGINS`       | Runtime    | Not set                 | Comma-separated list of origins that are allowed to make backend API requests (e.g., `https://my-vibekanban-frontend.com`) |
 
 **Build-time variables** must be set when running `pnpm run build`. **Runtime variables** are read when the application starts.
 
@@ -145,3 +146,40 @@ When running Vibe Kanban on a remote server (e.g., via systemctl, Docker, or clo
 When configured, the "Open in VSCode" buttons will generate URLs like `vscode://vscode-remote/ssh-remote+user@host/path` that open your local editor and connect to the remote server.
 
 See the [documentation](https://vibekanban.com/docs/configuration-customisation/global-settings#remote-ssh-configuration) for detailed setup instructions.
+
+### Dokploy + Tailscale (npx runtime)
+
+If you want GitHub-based deploys on Dokploy without building this repo from source, use `Dockerfile.npx` at the repository root.
+
+#### Dokploy settings
+
+- Provider: `GitHub`
+- Repository: `vibe-kanban`
+- Branch: `main` (or your chosen branch)
+- Trigger Type: `On Push`
+- Build Type: `Dockerfile`
+- Dockerfile Path: `./Dockerfile.npx`
+
+#### Required environment variable
+
+Set this in Dokploy:
+
+```bash
+VK_ALLOWED_ORIGINS=https://hetzner.tail95b3b5.ts.net
+```
+
+#### Tailnet-only exposure
+
+Expose Vibe Kanban only inside your tailnet with Tailscale Serve:
+
+```bash
+tailscale serve --bg --https=4443 / http://127.0.0.1:3456
+```
+
+This gives you a tailnet-only URL such as:
+
+`https://hetzner.tail95b3b5.ts.net:4443/`
+
+#### About `/vk` path hosting
+
+The current `npx vibe-kanban@latest` app serves root-absolute paths (for example `/assets/...` and `/api/...`), so hosting cleanly at `/vk` is not currently reliable without brittle proxy rewrites.
